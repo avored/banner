@@ -2,11 +2,12 @@
 
 namespace AvoRed\Banner;
 
-use AvoRed\Banner\Widget\Banner\Widget;
 use Illuminate\Support\ServiceProvider;
+use AvoRed\Banner\Widget\Banner\Widget;
+use AvoRed\Framework\AdminMenu\AdminMenu;
+
 use AvoRed\Framework\Widget\Facade as WidgetFacade;
 use AvoRed\Framework\AdminMenu\Facade as AdminMenuFacade;
-use AvoRed\Framework\AdminMenu\AdminMenu;
 use AvoRed\Framework\Breadcrumb\Facade as BreadcrumbFacade;
 
 class Module extends ServiceProvider
@@ -80,14 +81,12 @@ class Module extends ServiceProvider
     }
 
     /**
-     * Register the Admin Menu.
+     * Register the Admin Breadcrumb.
      *
      * @return void
      */
     protected function registerBreadCrumb()
     {
-
-
         BreadcrumbFacade::make('admin.banner.index', function ($breadcrumb) {
                                 $breadcrumb->label('Banner')
                                     ->parent('admin.dashboard');
@@ -98,6 +97,12 @@ class Module extends ServiceProvider
                                     ->parent('admin.dashboard')
                                     ->parent('admin.banner.index');
                             });
+
+        BreadcrumbFacade::make('admin.banner.edit', function ($breadcrumb) {
+            $breadcrumb->label('Edit')
+                ->parent('admin.dashboard')
+                ->parent('admin.banner.index');
+        });
     }
 
 }
