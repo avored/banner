@@ -24,6 +24,7 @@ class Module extends ServiceProvider
         $this->registerWidget();
         $this->registerAdminMenu();
         $this->registerBreadCrumb();
+        $this->publishFiles();
     }
 
     /**
@@ -103,6 +104,20 @@ class Module extends ServiceProvider
                 ->parent('admin.dashboard')
                 ->parent('admin.banner.index');
         });
+    }
+
+    /**
+     * Publish Files for AvoRed Banner Modules.
+     *
+     * @return void
+     */
+    public function publishFiles() {
+        $this->publishes([
+            __DIR__ . '/../resources/views' => base_path('themes/avored/default/views/vendor')
+        ],'avored-module-views');
+        $this->publishes([
+            __DIR__ . '/../database/migrations' => database_path('avored-migrations'),
+        ]);
     }
 
 }
