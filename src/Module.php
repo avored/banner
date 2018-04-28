@@ -70,7 +70,7 @@ class Module extends ServiceProvider
      */
     protected function registerAdminMenu()
     {
-        $systemMenu = AdminMenuFacade::get('system');
+        $cmsMenu = AdminMenuFacade::get('cms');
 
         $bannerMenu = new AdminMenu();
         $bannerMenu->key('banner')
@@ -78,7 +78,7 @@ class Module extends ServiceProvider
             ->route('admin.banner.index')
             ->icon('fas fa-ticket-alt');
 
-        $systemMenu->subMenu('banner', $bannerMenu);
+        $cmsMenu->subMenu('banner', $bannerMenu);
     }
 
     /**
