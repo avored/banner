@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Route;
 
 $baseAdminUrl = config('avored-ecommerce.admin_url');
 
