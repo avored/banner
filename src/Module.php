@@ -5,14 +5,14 @@ namespace AvoRed\Banner;
 use Illuminate\Support\ServiceProvider;
 use AvoRed\Banner\Widget\Banner\Widget;
 use AvoRed\Framework\AdminMenu\AdminMenu;
-
 use AvoRed\Framework\Widget\Facade as WidgetFacade;
 use AvoRed\Framework\AdminMenu\Facade as AdminMenuFacade;
 use AvoRed\Framework\Breadcrumb\Facade as BreadcrumbFacade;
+use AvoRed\Banner\Models\Repository\BannerRepository;
+use AvoRed\Banner\Models\Contracts\BannerInterface;
 
 class Module extends ServiceProvider
 {
-
     /**
      * Bootstrap any application services.
      *
@@ -25,6 +25,7 @@ class Module extends ServiceProvider
         $this->registerAdminMenu();
         $this->registerBreadCrumb();
         $this->publishFiles();
+        $this->registerModelContracts();
     }
 
     /**
@@ -34,7 +35,6 @@ class Module extends ServiceProvider
      */
     public function register()
     {
-
     }
 
     /**
@@ -45,7 +45,6 @@ class Module extends ServiceProvider
      */
     protected function registerResources()
     {
-
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'avored-banner');
         $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'avored-banner');
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
@@ -89,15 +88,15 @@ class Module extends ServiceProvider
     protected function registerBreadCrumb()
     {
         BreadcrumbFacade::make('admin.banner.index', function ($breadcrumb) {
-                                $breadcrumb->label('Banner')
+            $breadcrumb->label('Banner')
                                     ->parent('admin.dashboard');
-                            });
+        });
 
         BreadcrumbFacade::make('admin.banner.create', function ($breadcrumb) {
-                                $breadcrumb->label('Create')
+            $breadcrumb->label('Create')
                                     ->parent('admin.dashboard')
                                     ->parent('admin.banner.index');
-                            });
+        });
 
         BreadcrumbFacade::make('admin.banner.edit', function ($breadcrumb) {
             $breadcrumb->label('Edit')
@@ -111,13 +110,23 @@ class Module extends ServiceProvider
      *
      * @return void
      */
-    public function publishFiles() {
+    public function publishFiles()
+    {
         $this->publishes([
             __DIR__ . '/../resources/views' => base_path('themes/avored/default/views/vendor')
-        ],'avored-module-views');
+        ], 'avored-module-views');
         $this->publishes([
             __DIR__ . '/../database/migrations' => database_path('avored-migrations'),
         ]);
     }
 
+    /**
+     * Register the Repository Instance.
+     *
+     * @return void
+     */
+    protected function registerModelContracts()
+    {
+        $this->app->bind(BannerInterface::class, BannerRepository::class);
+    }
 }

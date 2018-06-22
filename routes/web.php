@@ -20,12 +20,12 @@ Route::middleware(['web', 'admin.auth', 'permission'])
             ->name('banner.store');
 
 
-        Route::get('banner/{id}/edit',  'BannerController@edit')
+        Route::get('banner/{banner}/edit',  'BannerController@edit')
             ->name('banner.edit');
-        Route::put('banner/{id}',  'BannerController@update')
+        Route::put('banner/{banner}',  'BannerController@update')
             ->name('banner.update');
 
-        Route::delete('banner/{id}',  'BannerController@destroy')
+        Route::delete('banner/{banner}',  'BannerController@destroy')
             ->name('banner.destroy');
 
     });

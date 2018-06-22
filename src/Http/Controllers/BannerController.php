@@ -7,33 +7,55 @@ use App\Http\Controllers\Controller;
 use AvoRed\Banner\Models\Database\Banner;
 use AvoRed\Banner\Http\Requests\BannerRequest;
 use AvoRed\Framework\Image\Facade as Image;
+use AvoRed\Banner\Models\Contracts\BannerInterface;
 
 class BannerController extends Controller
 {
-    public function index() {
+    /**
+     *
+     * @var \AvoRed\Banner\Models\Repository\BannerRepository;
+     */
+    protected $repository;
 
-        $bannerGrid = new BannerGrid(Banner::query());
+    public function __construct(BannerInterface $repository)
+    {
+        $this->repository = $repository;
+    }
+
+    public function index()
+    {
+        $bannerGrid = new BannerGrid($this->repository->query());
 
         return view('avored-banner::banner.index')->with('dataGrid', $bannerGrid->dataGrid);
     }
 
-    public function create() {
+    public function create()
+    {
         return view('avored-banner::banner.create');
     }
 
-    public function edit($id) {
+    public function store(BannerRequest $request)
+    {
+        $image = $request->file('image');
 
-        $banner = Banner::find($id);
+        $dbPath = $this->_uploadBanner($image);
+
+        $request->merge(['image_path' => $dbPath]);
+        $this->repository->create($request->all());
+
+        return redirect()->route('admin.banner.index');
+    }
+
+    public function edit(Banner $banner)
+    {
         return view('avored-banner::banner.edit')->with('model', $banner);
     }
 
-    public function update(BannerRequest $request, $id) {
-
-        $banner = Banner::find($id);
-
+    public function update(BannerRequest $request, Banner $banner)
+    {
         $image = $request->get('image');
 
-        if(null != $image) {
+        if (null != $image) {
             $dbPath = $this->_uploadBanner($image);
             $request->merge(['image_path' => $dbPath]);
         }
@@ -43,33 +65,18 @@ class BannerController extends Controller
         return redirect()->route('admin.banner.index');
     }
 
-    public function store(BannerRequest $request) {
-
-
-        $image = $request->file('image');
-        $dbPath = $this->_uploadBanner($image);
-
-        $request->merge(['image_path' => $dbPath]);
-        Banner::create($request->all());
-
+    public function destroy(Banner $banner)
+    {
+        $banner->delete();
         return redirect()->route('admin.banner.index');
     }
 
-    public function destroy($id) {
-        Banner::destroy($id);
-
-        return redirect()->route('admin.banner.index');
-    }
-
-    private function _uploadBanner($image) {
-
+    private function _uploadBanner($image)
+    {
         $tmpPath = str_split(strtolower(str_random(3)));
-        $checkDirectory = '/uploads/cms/images/'.implode('/', $tmpPath);
-        $dbPath = $checkDirectory.'/'.$image->getClientOriginalName();
+        $checkDirectory = '/uploads/cms/images/' . implode('/', $tmpPath);
+        $localImage = Image::upload($image, $checkDirectory);
 
-        Image::upload($image, $checkDirectory);
-
-        return $dbPath;
-
+        return $localImage->relativePath;
     }
 }
