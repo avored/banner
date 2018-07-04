@@ -114,9 +114,9 @@ class Module extends ServiceProvider
     {
         $this->publishes([
             __DIR__ . '/../resources/views' => base_path('themes/avored/default/views/vendor')
-        ], 'avored-module-views');
+        ], 'avored-banner-views');
         $this->publishes([
-            __DIR__ . '/../database/migrations' => database_path('avored-migrations'),
+            __DIR__ . '/../database/migrations' => database_path('migrations'),
         ]);
     }
 
