@@ -24,9 +24,7 @@ class BannerRequest extends Request
     {
 
         $validation['name'] = 'required|max:255';
-        if($this->method() == "POST" ) {
-            //$validation['image'] = 'mimes:jpeg,bmp,png,gif';
-        }
+        $validation['image'] = 'nullable|image';
         $validation['alt_text'] = 'max:255';
         $validation['url'] = 'max:255';
         $validation['sort_order'] = 'required|integer';

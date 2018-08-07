@@ -1,4 +1,4 @@
-@extends('avored-ecommerce::layouts.app')
+@extends('avored-framework::layouts.app')
 
 @section('content')
 
@@ -19,7 +19,7 @@
                                 {{ __('avored-banner::banner.banner-create') }}
                             </button>
                             <a href="{{ route('admin.banner.index') }}" class="btn">
-                                {{ __('avored-ecommerce::lang.cancel') }}
+                                {{ __('avored-framework::lang.cancel') }}
                             </a>
                         </div>
 
