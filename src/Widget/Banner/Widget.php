@@ -2,52 +2,37 @@
 
 namespace AvoRed\Banner\Widget\Banner;
 
-use AvoRed\Framework\Widget\Contracts\Widget as WidgetContract;
+use AvoRed\Framework\Support\Contracts\WidgetInterface;
 use AvoRed\Banner\Models\Database\Banner;
 
-
-class Widget implements WidgetContract
+class Widget implements WidgetInterface
 {
-
-
-
     /**
-     *
      * Widget View Path
-     *
      * @var string $view
      */
 
-    protected $view = "avored-banner::widget.index";
-
+    protected $view = "a-banner::widget.index";
 
     /**
-     *
      * Widget Label
-     *
      * @var string $view
      */
 
     protected $label = 'Banner Slider';
 
-
     /**
-     *
      * Widget Type
-     *
      * @var string $view
      */
 
     protected $type = "cms";
 
     /**
-     *
      * Widget unique identifier
-     *
      * @var string $identifier
      */
     protected $identifier = "avored-banner";
-
 
     public function view()
     {
@@ -60,7 +45,6 @@ class Widget implements WidgetContract
      */
     public function identifier()
     {
-
         return $this->identifier;
     }
 
@@ -70,7 +54,6 @@ class Widget implements WidgetContract
     */
     public function label()
     {
-
         return $this->label;
     }
 
@@ -80,7 +63,6 @@ class Widget implements WidgetContract
     */
     public function type()
     {
-
         return $this->type;
     }
 
@@ -91,16 +73,12 @@ class Widget implements WidgetContract
      */
     public function with()
     {
-
         return [];
-
     }
 
-    public function render() {
-
-        $banners = Banner::whereStatus('ENABLED')->orderBy('sort_order','asc')->get();
-
-        return view($this->view())->with('banners' , $banners);
+    public function render()
+    {
+        //$banners = Banner::whereStatus('ENABLED')->orderBy('sort_order', 'asc')->get();
+        return view($this->view()); //->with('banners', $banners);
     }
-
 }

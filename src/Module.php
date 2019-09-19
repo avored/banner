@@ -3,19 +3,17 @@
 namespace AvoRed\Banner;
 
 use Illuminate\Support\ServiceProvider;
-use AvoRed\Banner\Widget\Banner\Widget;
-use AvoRed\Framework\AdminMenu\AdminMenu;
-use AvoRed\Framework\Widget\Facade as WidgetFacade;
-use AvoRed\Framework\AdminMenu\Facade as AdminMenuFacade;
-use AvoRed\Framework\Breadcrumb\Facade as BreadcrumbFacade;
+use AvoRed\Banner\Widget\Banner\Widget as BannerWidget;
 use AvoRed\Banner\Models\Repository\BannerRepository;
 use AvoRed\Banner\Models\Contracts\BannerInterface;
+use AvoRed\Framework\Menu\MenuItem;
+use AvoRed\Framework\Support\Facades\Menu;
+use AvoRed\Framework\Support\Facades\Widget;
 
 class Module extends ServiceProvider
 {
     /**
-     * Bootstrap any application services.
-     *
+     * Bootstrap any application services
      * @return void
      */
     public function boot()
@@ -23,7 +21,8 @@ class Module extends ServiceProvider
         $this->registerResources();
         $this->registerWidget();
         $this->registerAdminMenu();
-        $this->registerBreadCrumb();
+        //$this->registerBreadcrumb();
+        //$this->registerPermissions();
         $this->publishFiles();
         $this->registerModelContracts();
     }
@@ -45,8 +44,8 @@ class Module extends ServiceProvider
      */
     protected function registerResources()
     {
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'avored-banner');
-        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'avored-banner');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'a-banner');
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'a-banner');
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
     }
@@ -58,8 +57,8 @@ class Module extends ServiceProvider
      */
     protected function registerWidget()
     {
-        $bannerProduct = new Widget();
-        WidgetFacade::make($bannerProduct->identifier(), $bannerProduct);
+        $bannerProduct = new BannerWidget();
+        Widget::make($bannerProduct->identifier(), $bannerProduct);
     }
 
     /**
@@ -69,15 +68,11 @@ class Module extends ServiceProvider
      */
     protected function registerAdminMenu()
     {
-        $cmsMenu = AdminMenuFacade::get('cms');
-
-        $bannerMenu = new AdminMenu();
-        $bannerMenu->key('banner')
-            ->label('Banner')
-            ->route('admin.banner.index')
-            ->icon('fas fa-ticket-alt');
-
-        $cmsMenu->subMenu('banner', $bannerMenu);
+        $cmsMenu = Menu::get('cms');
+        $cmsMenu->subMenu('banner', function (MenuItem $menuItem) {
+            $menuItem->label('Banner')
+                ->route('admin.banner.table');
+        });
     }
 
     /**
@@ -117,6 +112,9 @@ class Module extends ServiceProvider
         ], 'avored-banner-views');
         $this->publishes([
             __DIR__ . '/../database/migrations' => database_path('migrations'),
+        ]);
+        $this->publishes([
+            __DIR__ . '/../dist/js' => public_path('avored-admin/js'),
         ]);
     }
 
