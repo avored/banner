@@ -1,32 +1,22 @@
 <?php
-use Illuminate\Support\Facades\Route;
+$baseAdminUrl = config('avored.admin_url');
 
-$baseAdminUrl = config('avored-ecommerce.admin_url');
-
-
-Route::middleware(['web', 'admin.auth', 'permission'])
+Route::middleware(['web', 'admin.auth'])
     ->prefix($baseAdminUrl)
-    ->namespace('AvoRed\Banner\Http\Controllers')
     ->name('admin.')
     ->group(function () {
-
-
-        Route::get('banner',  'BannerController@index')
-                        ->name('banner.index');
-
-        Route::get('banner/create',  'BannerController@create')
-            ->name('banner.create');
-        Route::post('banner',  'BannerController@store')
-            ->name('banner.store');
-
-
-        Route::get('banner/{banner}/edit',  'BannerController@edit')
-            ->name('banner.edit');
-        Route::put('banner/{banner}',  'BannerController@update')
-            ->name('banner.update');
-
-        Route::delete('banner/{banner}',  'BannerController@destroy')
+        Route::get('banner', AvoRed\Banner\Http\Controllers\TableController::class)
+            ->name('banner.table');
+        Route::get(
+            'banner-edit/{banner?}',
+            AvoRed\Banner\Http\Controllers\EditController::class
+        )->name('banner.edit');
+        Route::post(
+            'banner-save/{banner?}',
+            AvoRed\Banner\Http\Controllers\SaveController::class
+        )->name('banner.save');
+        Route::delete('banner/{banner}', AvoRed\Banner\Http\Controllers\DestroyController::class)
             ->name('banner.destroy');
-
+        Route::post('banner-upload', AvoRed\Banner\Http\Controllers\UploadController::class)
+            ->name('banner.upload');
     });
-
