@@ -1,6 +1,6 @@
 <?php
 
-namespace AvoRed\Banner\Models\Contracts;
+namespace AvoRed\Banner\Database\Contracts;
 
 interface BannerInterface
 {

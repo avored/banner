@@ -17,9 +17,8 @@
 @section('content')
 <div class="mt-3">  
 <div>
-    <form action="{{ route('admin.banner.update', $banner) }}"  method="post">
+    <form action="{{ route('admin.banner.store') }}"  method="post">
         @csrf
-        @method('put')
         <avored-tabs>
             @foreach ($tabs as $tab)
                 <avored-tab identifier="{{ $tab->key() }}" name="{{ $tab->label() }}">

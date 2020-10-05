@@ -11,10 +11,5 @@ return [
     'target' => 'Target',
     'status' => 'Status',
     'sort_order' => 'Sort Order',
-    'index' => [
-        'title' => 'Banner List'
-    ],
-    'edit' => [
-        'title' => 'Banner Save'
-    ]
+    'basic_info' => 'Basic Info'
 ];

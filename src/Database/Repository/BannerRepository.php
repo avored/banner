@@ -1,9 +1,9 @@
 <?php
 
-namespace AvoRed\Banner\Models\Repository;
+namespace AvoRed\Banner\Database\Repository;
 
-use AvoRed\Banner\Models\Database\Banner;
-use AvoRed\Banner\Models\Contracts\BannerInterface;
+use AvoRed\Banner\Database\Models\Banner;
+use AvoRed\Banner\Database\Contracts\BannerInterface;
 
 class BannerRepository implements BannerInterface
 {
