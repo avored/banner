@@ -5,6 +5,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Banner extends Model
 {
+    const ENABLED = 'ENABLED';
+    const DISABLED = 'DISABLED';
+
     protected $fillable = [
         'name',
         'image_path',

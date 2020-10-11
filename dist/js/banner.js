@@ -86,79 +86,6 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/components/BannerEdit.vue?vue&type=script&lang=js&":
-/*!******************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/components/BannerEdit.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var lodash_isNil__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash/isNil */ "./node_modules/lodash/isNil.js");
-/* harmony import */ var lodash_isNil__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_isNil__WEBPACK_IMPORTED_MODULE_0__);
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['banner', 'baseUrl'],
-  data: function data() {
-    return {
-      form: this.$form.createForm(this),
-      status: 0,
-      image_path: null,
-      headers: null,
-      bannerTarget: null,
-      defaultFileList: []
-    };
-  },
-  methods: {
-    targetChange: function targetChange(val) {
-      this.bannerTarget = val;
-    },
-    handleSubmit: function handleSubmit() {
-      this.form.validateFields(function (err, values) {
-        if (err) {
-          e.preventDefault();
-        }
-      });
-    },
-    handleUploadImageChange: function handleUploadImageChange(info) {
-      if (info.file.status === 'done' && info.file.response.success) {
-        this.image_path = info.file.response.image;
-      } else if (info.file.status === 'error') {
-        this.$message.error('upload error');
-      }
-    },
-    changeStatusSwitch: function changeStatusSwitch(val) {
-      if (val) {
-        this.status = 1;
-      } else {
-        this.status = 0;
-      }
-    },
-    clickCancelButton: function clickCancelButton() {
-      window.location = this.baseUrl + '/banner';
-    }
-  },
-  mounted: function mounted() {
-    this.headers = {
-      'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content
-    };
-
-    if (!lodash_isNil__WEBPACK_IMPORTED_MODULE_0___default()(this.banner)) {
-      this.status = this.banner.status;
-      this.image_path = this.banner.image_path;
-      this.defaultFileList.push({
-        uid: this.banner.id,
-        name: '/storage/' + this.banner.image_path,
-        status: 'done'
-      });
-      this.bannerTarget = this.banner.target;
-    }
-  }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/components/BannerTable.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/components/BannerTable.vue?vue&type=script&lang=js& ***!
@@ -268,42 +195,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   }
 });
-
-/***/ }),
-
-/***/ "./node_modules/lodash/isNil.js":
-/*!**************************************!*\
-  !*** ./node_modules/lodash/isNil.js ***!
-  \**************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/**
- * Checks if `value` is `null` or `undefined`.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is nullish, else `false`.
- * @example
- *
- * _.isNil(null);
- * // => true
- *
- * _.isNil(void 0);
- * // => true
- *
- * _.isNil(NaN);
- * // => false
- */
-function isNil(value) {
-  return value == null;
-}
-
-module.exports = isNil;
-
 
 /***/ }),
 
@@ -568,56 +459,6 @@ function normalizeComponent (
 
 /***/ }),
 
-/***/ "./resources/components/BannerEdit.vue":
-/*!*********************************************!*\
-  !*** ./resources/components/BannerEdit.vue ***!
-  \*********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _BannerEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BannerEdit.vue?vue&type=script&lang=js& */ "./resources/components/BannerEdit.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-var render, staticRenderFns
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
-  _BannerEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"],
-  render,
-  staticRenderFns,
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/components/BannerEdit.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/components/BannerEdit.vue?vue&type=script&lang=js&":
-/*!**********************************************************************!*\
-  !*** ./resources/components/BannerEdit.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BannerEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/babel-loader/lib??ref--4-0!../../node_modules/vue-loader/lib??vue-loader-options!./BannerEdit.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/components/BannerEdit.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BannerEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
 /***/ "./resources/components/BannerTable.vue":
 /*!**********************************************!*\
   !*** ./resources/components/BannerTable.vue ***!
@@ -696,7 +537,6 @@ __webpack_require__.r(__webpack_exports__);
 
 AvoRed.initialize(function (Vue) {
   Vue.component('banner-table', __webpack_require__(/*! ../components/BannerTable.vue */ "./resources/components/BannerTable.vue")["default"]);
-  Vue.component('banner-edit', __webpack_require__(/*! ../components/BannerEdit.vue */ "./resources/components/BannerEdit.vue")["default"]);
 });
 
 /***/ }),

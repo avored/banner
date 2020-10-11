@@ -114,4 +114,19 @@ class BannerController
             'Last-Modified' => sprintf('%s GMT', gmdate('D, d M Y H:i:s', $lastModified)),
         ]);
     }
+    public function frontJS()
+    {
+        $file = __DIR__ . '/../../../dist/js/carousel.js';
+
+        $expires = strtotime('+1 year');
+        $lastModified = filemtime($file);
+        $cacheControl = 'public, max-age=31536000';
+
+        return response()->file($file, [
+            'Content-Type' => 'application/javascript; charset=utf-8',
+            'Expires' => sprintf('%s GMT', gmdate('D, d M Y H:i:s', $expires)),
+            'Cache-Control' => $cacheControl,
+            'Last-Modified' => sprintf('%s GMT', gmdate('D, d M Y H:i:s', $lastModified)),
+        ]);
+    }
 }

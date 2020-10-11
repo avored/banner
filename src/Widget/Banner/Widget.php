@@ -2,6 +2,7 @@
 
 namespace AvoRed\Banner\Widget\Banner;
 
+use AvoRed\Banner\Database\Contracts\BannerInterface;
 use AvoRed\Framework\Support\Contracts\WidgetInterface;
 use AvoRed\Banner\Models\Database\Banner;
 
@@ -12,14 +13,14 @@ class Widget implements WidgetInterface
      * @var string $view
      */
 
-    protected $view = "a-banner::widget.index";
+    protected $view = "avored-banner::widget.index";
 
     /**
      * Widget Label
      * @var string $view
      */
 
-    protected $label = 'Banner Slider';
+    protected $label;
 
     /**
      * Widget Type
@@ -54,7 +55,7 @@ class Widget implements WidgetInterface
     */
     public function label()
     {
-        return $this->label;
+        return __('avored-banner::banner.banner_slider');
     }
 
     /*
@@ -73,12 +74,14 @@ class Widget implements WidgetInterface
      */
     public function with()
     {
-        return [];
+        $repository = app(BannerInterface::class);
+        $banners = $repository->getAllEnabledBanner();
+        return ['banners' => $banners];
     }
 
     public function render()
     {
-        //$banners = Banner::whereStatus('ENABLED')->orderBy('sort_order', 'asc')->get();
-        return view($this->view()); //->with('banners', $banners);
+        return view($this->view())
+            ->with($this->with());
     }
 }

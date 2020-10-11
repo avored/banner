@@ -11,5 +11,6 @@ return [
     'target' => 'Target',
     'status' => 'Status',
     'sort_order' => 'Sort Order',
-    'basic_info' => 'Basic Info'
+    'basic_info' => 'Basic Info',
+    'banner_slider' => 'Banner Slider'
 ];
