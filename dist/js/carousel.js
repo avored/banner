@@ -113,10 +113,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'banner-carousel',
   props: ['initBanners'],
@@ -185,65 +181,67 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "div",
-      { staticClass: "mb-5" },
-      _vm._l(_vm.banners, function(banner) {
-        return _c(
+  return _vm.banners.length > 0
+    ? _c("div", [
+        _c(
           "div",
-          {
-            key: banner.id,
-            staticClass:
-              "w-full bg-red-800 rounded transition duration-700 ease-in-out",
-            class: banner.visible ? "active block" : " inactive hidden"
-          },
-          [
-            _c("a", { attrs: { href: banner.url } }, [
-              _c("img", {
-                staticClass: "h-32 w-full",
-                attrs: {
-                  src: "/storage/" + banner.image_path,
-                  alt: banner.alt_text
+          { staticClass: "mb-5" },
+          _vm._l(_vm.banners, function(banner) {
+            return _c(
+              "div",
+              {
+                key: banner.id,
+                staticClass:
+                  "w-full bg-red-800 rounded transition duration-700 ease-in-out",
+                class: banner.visible ? "active block" : " inactive hidden"
+              },
+              [
+                _c("a", { attrs: { href: banner.url } }, [
+                  _c("img", {
+                    staticClass: "h-32 w-full",
+                    attrs: {
+                      src: "/storage/" + banner.image_path,
+                      alt: banner.alt_text
+                    }
+                  })
+                ])
+              ]
+            )
+          }),
+          0
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "mt-5" }, [
+          _c(
+            "a",
+            {
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.prevOnClick($event)
                 }
-              })
-            ])
-          ]
-        )
-      }),
-      0
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "mt-5" }, [
-      _c(
-        "a",
-        {
-          attrs: { href: "#" },
-          on: {
-            click: function($event) {
-              $event.preventDefault()
-              return _vm.prevOnClick($event)
-            }
-          }
-        },
-        [_vm._v("Prev")]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          attrs: { href: "#" },
-          on: {
-            click: function($event) {
-              $event.preventDefault()
-              return _vm.nextOnClick($event)
-            }
-          }
-        },
-        [_vm._v("Next")]
-      )
-    ])
-  ])
+              }
+            },
+            [_vm._v("Prev")]
+          ),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.nextOnClick($event)
+                }
+              }
+            },
+            [_vm._v("Next")]
+          )
+        ])
+      ])
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true

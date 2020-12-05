@@ -1,7 +1,6 @@
 <template>
-    <div>
-        <div class="mb-5">
-            
+    <div v-if="banners.length > 0">
+        <div class="mb-5">        
             <div class="w-full bg-red-800 rounded transition duration-700 ease-in-out" 
                 v-for="banner in banners"
                 :key="banner.id"
@@ -11,13 +10,10 @@
                     </a>
             </div>           
         </div>
-
         <div class="mt-5">
             <a href="#" @click.prevent="prevOnClick">Prev</a>
             <a href="#" @click.prevent="nextOnClick">Next</a>
         </div>
-
-       
     </div>
 </template>
 <script>
