@@ -1,43 +1,36 @@
 @extends('avored::layouts.app')
 
 @section('meta_title')
-    {{ __('a-banner::banner.index.title') }}: AvoRed E commerce Admin Dashboard
+    {{ __('avored::system.pages.title.list', ['attribute' => __('avored-banner::banner.title')]) }}: AvoRed E commerce Admin Dashboard
 @endsection
 
 @section('page_title')
-    {{ __('a-banner::banner.index.title') }}
+    <div class="text-gray-800 flex items-center">
+        <div class="text-xl text-red-700 font-semibold">
+            {{ __('avored::system.pages.title.list', ['attribute' => __('avored-banner::banner.title')]) }}
+        </div>
+        <div class="ml-auto">
+            <a href="{{ route('admin.banner.create') }}"
+                class="px-4 py-2 font-semibold leading-7 text-white hover:text-white bg-red-600 rounded hover:bg-red-700"
+            >
+                <svg class="w-5 h-5 inline-block text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M17 11a1 1 0 0 1 0 2h-4v4a1 1 0 0 1-2 0v-4H7a1 1 0 0 1 0-2h4V7a1 1 0 0 1 2 0v4h4z"/>
+                </svg>
+                {{ __('avored::system.btn.create') }}
+            </a>
+        </div>
+    </div>
 @endsection
 
 @section('content')
-<a-row type="flex" class="mb-1" justify="end">
-    <a-col>
-        <a 
-            href="{{ route('admin.banner.edit') }}"
-            class="ant-btn ant-btn-primary">
-            <a-icon type="plus"></a-icon>
-            {{ __('avored::system.btn.create') }}
-        </a>
-    </a-col>
-</a-row>
-<a-row type="flex" justify="center">
-    <a-col :span="24">        
-        <banner-table :banners="{{ $banners }}" inline-template base-url="{{ asset(config('avored.admin_url')) }}">
-            <a-table :columns="columns" row-key="id" :data-source="banners" @change="handleTableChange">
-                <span slot="action" slot-scope="text, record">
-                    
-                    <a :href="getEditUrl(record)">
-                        <a-icon type="edit"></a-icon>
-                    </a>
-                    <a :href="getDeleteUrl(record)" v-on:click.prevent="clickOnDeleteIcon(record)">
-                        <a-icon type="delete"></a-icon>
-                    </a>
-                </span>
-            </a-table>
-        </banner-table>
-    </a-col>
-</a-row>
+
+<banner-table
+    :init-banners="{{ json_encode($banners) }}"
+    base-url="{{ asset(config('avored.admin_url')) }}"
+></banner-table>
+
 @endsection
 
 @push('scripts')
-<script src="{{ asset('avored-admin/js/banner.js') }}"></script>
+    <script src="{{ route('admin.banner.js') }}"></script>
 @endpush

@@ -1,9 +1,11 @@
 <?php
 
-namespace AvoRed\Banner\Models\Repository;
+namespace AvoRed\Banner\Database\Repository;
 
-use AvoRed\Banner\Models\Database\Banner;
-use AvoRed\Banner\Models\Contracts\BannerInterface;
+use AvoRed\Banner\Database\Models\Banner;
+use AvoRed\Banner\Database\Contracts\BannerInterface;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 
 class BannerRepository implements BannerInterface
 {
@@ -56,5 +58,19 @@ class BannerRepository implements BannerInterface
     public function create($data)
     {
         return Banner::create($data);
+    }
+
+    /**
+     * Get all Banners
+     *
+     * @return \AvoRed\Banner\Models\Banner
+     */
+    public function getAllEnabledBanner(): Collection
+    {
+        return Banner::query()
+            ->where('status', Banner::ENABLED)
+            ->orderBy('sort_order')
+            ->get();
+        ;
     }
 }

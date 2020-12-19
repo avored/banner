@@ -4,11 +4,14 @@ namespace AvoRed\Banner;
 
 use Illuminate\Support\ServiceProvider;
 use AvoRed\Banner\Widget\Banner\Widget as BannerWidget;
-use AvoRed\Banner\Models\Repository\BannerRepository;
-use AvoRed\Banner\Models\Contracts\BannerInterface;
+use AvoRed\Banner\Database\Repository\BannerRepository;
+use AvoRed\Banner\Database\Contracts\BannerInterface;
 use AvoRed\Framework\Menu\MenuItem;
 use AvoRed\Framework\Support\Facades\Menu;
 use AvoRed\Framework\Support\Facades\Widget;
+use AvoRed\Framework\Support\Facades\Breadcrumb as BreadcrumbFacade;
+use AvoRed\Framework\Support\Facades\Tab;
+use AvoRed\Framework\Tab\TabItem;
 
 class Module extends ServiceProvider
 {
@@ -21,8 +24,9 @@ class Module extends ServiceProvider
         $this->registerResources();
         $this->registerWidget();
         $this->registerAdminMenu();
-        //$this->registerBreadcrumb();
-        //$this->registerPermissions();
+        $this->registerTab();
+        $this->registerBreadCrumb();
+        // $this->registerPermissions();
         $this->publishFiles();
         $this->registerModelContracts();
     }
@@ -44,8 +48,8 @@ class Module extends ServiceProvider
      */
     protected function registerResources()
     {
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'a-banner');
-        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'a-banner');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'avored-banner');
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'avored-banner');
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
     }
@@ -71,7 +75,7 @@ class Module extends ServiceProvider
         $cmsMenu = Menu::get('cms');
         $cmsMenu->subMenu('banner', function (MenuItem $menuItem) {
             $menuItem->label('Banner')
-                ->route('admin.banner.table');
+                ->route('admin.banner.index');
         });
     }
 
@@ -84,13 +88,13 @@ class Module extends ServiceProvider
     {
         BreadcrumbFacade::make('admin.banner.index', function ($breadcrumb) {
             $breadcrumb->label('Banner')
-                                    ->parent('admin.dashboard');
+                ->parent('admin.dashboard');
         });
 
         BreadcrumbFacade::make('admin.banner.create', function ($breadcrumb) {
             $breadcrumb->label('Create')
-                                    ->parent('admin.dashboard')
-                                    ->parent('admin.banner.index');
+                ->parent('admin.dashboard')
+                ->parent('admin.banner.index');
         });
 
         BreadcrumbFacade::make('admin.banner.edit', function ($breadcrumb) {
@@ -126,5 +130,20 @@ class Module extends ServiceProvider
     protected function registerModelContracts()
     {
         $this->app->bind(BannerInterface::class, BannerRepository::class);
+    }
+    
+    /**
+     * Register the Tab for the banner module.
+     *
+     * @return void
+     */
+    protected function registerTab()
+    {
+         /****** CATALOG CATEGORY TABS *******/
+         Tab::put('cms.banner', function (TabItem $tab) {
+            $tab->key('cms.banner.info')
+                ->label('avored-banner::banner.basic_info')
+                ->view('avored-banner::banner._fields');
+        });
     }
 }

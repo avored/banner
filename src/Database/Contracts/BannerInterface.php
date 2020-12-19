@@ -1,6 +1,9 @@
 <?php
 
-namespace AvoRed\Banner\Models\Contracts;
+namespace AvoRed\Banner\Database\Contracts;
+
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 
 interface BannerInterface
 {
@@ -40,4 +43,11 @@ interface BannerInterface
      * @return \AvoRed\Banner\Models\Banner
      */
     public function create($data);
+
+     /**
+     * Get all Banners
+     *
+     * @return \AvoRed\Banner\Models\Banner
+     */
+    public function getAllEnabledBanner(): Collection;
 }
