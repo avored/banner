@@ -17,7 +17,7 @@ Route::middleware(['web', 'auth:admin'])
     ->group(function () {
         Route::resource('banner', \AvoRed\Banner\Http\Controllers\BannerController::class);
 
-        Route::get('js/banner.js', [\AvoRed\Banner\Http\Controllers\BannerController::class, 'adminJS'])
+        Route::get('banner-js/banner.js', [\AvoRed\Banner\Http\Controllers\BannerController::class, 'adminJS'])
             ->name('banner.js');
 
         Route::post('banner/upload', [\AvoRed\Banner\Http\Controllers\BannerController::class, 'upload'])

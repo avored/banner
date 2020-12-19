@@ -32,5 +32,5 @@
 @endsection
 
 @push('scripts')
-<script src="{{ route('admin.banner.js') }}"></script>
+    <script src="{{ route('admin.banner.js') }}"></script>
 @endpush
